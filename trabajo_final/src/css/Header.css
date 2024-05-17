@@ -1,0 +1,78 @@
+header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15vw;
+    height: var(--header-height);
+    background-color: var(--naranja);
+}
+
+.header-menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    color: white;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.logo img {
+    border-radius: 0.5rem;
+}
+
+header a {
+    width: 100px;
+    text-decoration: none;
+}
+
+.phone-number {
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: var(--header-height);
+
+    background-color: rgb(38, 38, 145);
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+}
+
+.phone-number span {
+    font-weight: bold;
+    color: white;
+}
+
+.phone-number .number {
+    font-size: 18px;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    height: var(--header-height);
+}
+
+.menu-item:hover {
+    background-color: color-mix(in srgb, var(--naranja) 90%, white);
+}
+
+.menu-item:not(:last-child) {
+    border-right: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.menu-item span {
+    font-size: 14px;
+    font-weight: 600;
+    color: white;
+}

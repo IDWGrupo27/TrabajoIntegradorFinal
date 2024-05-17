@@ -1,0 +1,99 @@
+.contacto form {
+    text-align: center;
+    padding: 45px 55px;
+}
+
+.contacto label {
+    font-size: 15px;
+    font-weight: 600;
+    margin-top: 15px;
+    margin-bottom: 5px;
+}
+
+.contacto textarea {
+    padding: 17px, 25px;
+    border-radius: 8px;
+    font-size: 17px;
+    background-color: rgba(207, 129, 76, 0.1);
+    border: 2px solid #fae4d1;
+    outline: none;
+    resize: none;
+}
+
+.contacto input::placeholder {
+    background-color: rgba(207, 129, 76, 0.1);
+}
+
+.contacto input:focus,
+.contacto textarea:focus {
+    outline: 3px solid rgba(207, 129, 76, 0.3);
+}
+
+.contacto input:focus::placeholder {
+    color: transparent;
+}
+
+.contacto h1 {
+    font-size: 23px;
+    margin-bottom: 30px;
+    font-weight: 800;
+    line-height: normal;
+    letter-spacing: -1px;
+    text-shadow: #5b5a5a 1px 0 10px;
+    margin-top: 0px;
+}
+
+.contacto a.btn {
+    padding: 5px 40px 10px 40px;
+    border-radius: 8px;
+    font-weight: 800;
+    color: white;
+    text-decoration: none;
+}
+
+.contacto a:hover {
+    background-color: color-mix(in srgb, var(--naranja) 80%, white);
+}
+
+.contacto {
+    width: 450px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.inpt {
+    width: 95%;
+    font-size: 17px;
+    background-color: rgba(207, 129, 76, 0.1);
+    border: 2px solid #fae4d1;
+    outline: none;
+}
+
+.btn {
+    font-size: 16px;
+    background-color: rgba(207, 129, 76);
+    border: 0;
+    cursor: pointer;
+}
+
+.required:after {
+    content: "*";
+    margin-left: 3px;
+    color: red;
+    font-weight: bold;
+}
+
+.mensaje {
+    font-size: 30px;
+}
+
+.send {
+    margin-bottom: 30px;
+}
