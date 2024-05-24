@@ -1,8 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import "../css/Contacto.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
+import { MensajeEnviado } from "./MensajeEnviado";
 
 export const Contacto = () => {
+
+    
+
     return (
         <main>
             <section className="contacto">
@@ -54,9 +60,11 @@ export const Contacto = () => {
                     </div>
 
                     <Link className="btn" to={"/mensaje-enviado"}>
-                        <i className="fa fa-share-square"></i>&nbsp; Enviar
+                        <FontAwesomeIcon icon={faShareFromSquare}/>&nbsp; Enviar
                     </Link>
+
                 </form>
+                
             </section>
         </main>
     );

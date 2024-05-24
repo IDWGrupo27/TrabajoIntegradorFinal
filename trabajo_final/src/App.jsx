@@ -6,6 +6,8 @@ import { Home } from "./routes/Home";
 import { Contacto } from "./routes/Contacto";
 import { Institucional } from "./routes/Institucional";
 import { MensajeEnviado } from "./routes/MensajeEnviado";
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faShareFromSquare, faSearch, faHome } from "@fortawesome/free-solid-svg-icons";
 
 export const App = () => {
     return (
@@ -26,4 +28,5 @@ export const App = () => {
     );
 };
 
+library.add(faShareFromSquare, faSearch, faHome)
 export default App;
