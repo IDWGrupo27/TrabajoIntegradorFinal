@@ -97,3 +97,14 @@
 .send {
     margin-bottom: 30px;
 }
+
+button.btn {
+    width: 50%;
+    height: 20%;
+}
+
+textarea{
+    font-family: Arial, Helvetica, sans-serif;
+    font-style: italic;
+    text-align: center;
+}
