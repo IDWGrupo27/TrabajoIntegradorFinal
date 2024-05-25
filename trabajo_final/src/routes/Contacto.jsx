@@ -5,6 +5,7 @@ import { faShareFromSquare } from "@fortawesome/free-solid-svg-icons";
 import { useState } from "react";
 import { useNavigate } from 'react-router-dom'
 
+
 export const Contacto = () => {
 
     const [mensaje, setMensaje] = useState({
