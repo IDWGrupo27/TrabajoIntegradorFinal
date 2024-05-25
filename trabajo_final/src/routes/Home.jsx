@@ -2,6 +2,8 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import Hotel from "../components/Hotel";
 import "../css/index.css";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
 
 export const Home = () => {
     return (
@@ -49,7 +51,7 @@ export const Home = () => {
                         </form>
                     </div>
                     <button type="submit" form="search-form">
-                        Buscar hoteles
+                        <FontAwesomeIcon icon={faSearch}/> Buscar hoteles
                     </button>
                 </div>
             </section>
