@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Hotel from "../components/Hotel";
 import "../css/index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch } from "@fortawesome/free-solid-svg-icons";
+import { useApi } from "../services/ApiService";
 
 export const Home = () => {
+    const { listaAlojamientos } = useApi();
+
     return (
         <main>
             <section className="info">
@@ -51,7 +54,7 @@ export const Home = () => {
                         </form>
                     </div>
                     <button type="submit" form="search-form">
-                        <FontAwesomeIcon icon={faSearch}/> Buscar hoteles
+                        <FontAwesomeIcon icon={faSearch} /> Buscar hoteles
                     </button>
                 </div>
             </section>
@@ -66,11 +69,17 @@ export const Home = () => {
                     </div>
                 </div>
                 <div className="hotels">
-                    <Hotel name="Hotel 1" imgSrc="../img/hotel.png"></Hotel>
-                    <Hotel name="Hotel 2" imgSrc="../img/hotel.png"></Hotel>
-                    <Hotel name="Hotel 3" imgSrc="../img/hotel.png"></Hotel>
-                    <Hotel name="Hotel 4" imgSrc="../img/hotel.png"></Hotel>
-                    <Hotel name="Hotel 5" imgSrc="../img/hotel.png"></Hotel>
+                    {listaAlojamientos.map((alojamiento) => (
+                        <Hotel
+                            name={alojamiento.Titulo}
+                            descripcion={alojamiento.Descripcion}
+                            disponible={alojamiento.Estado === "Disponible"}
+                            imgSrc="../img/hotel.png"
+                        />
+                    ))}
+                    <Hotel name="Hotel 1" imgSrc="../img/hotel.png" />
+                    <Hotel name="Hotel 2" imgSrc="../img/hotel.png" />
+                    <Hotel name="Hotel 3" imgSrc="../img/hotel.png" />
                 </div>
             </section>
 

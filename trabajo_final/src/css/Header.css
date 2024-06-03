@@ -22,7 +22,9 @@ header {
 }
 
 .logo img {
-    border-radius: 0.5rem;
+    border-radius: 1rem;
+    padding: 2px;
+    background-color: rgb(255, 255, 255);
 }
 
 header a {
