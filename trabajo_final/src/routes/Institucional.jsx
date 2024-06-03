@@ -1,9 +1,9 @@
 import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import "../css/Institucional.css";
-import propuestasCabanas from "../img/propuestasCabañas.jpg";
-import propuestasDepartamentos from "../img/propuestasDepartamentos.jpg";
-import propuestasHoteles from "../img/propuestasHoteles.jpg";
+import propuestasCabanas from "../img/images/propuestasCabañas.jpg";
+import propuestasDepartamentos from "../img/images/propuestasDepartamentos.jpg";
+import propuestasHoteles from "../img/images/propuestasHoteles.jpg";
 
 export const Institucional = () => {
     return (

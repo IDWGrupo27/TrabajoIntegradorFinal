@@ -7,7 +7,7 @@ import { Contacto } from "./routes/Contacto";
 import { Institucional } from "./routes/Institucional";
 import { MensajeEnviado } from "./routes/MensajeEnviado";
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faShareFromSquare, faSearch, faHome } from "@fortawesome/free-solid-svg-icons";
+import { faShareFromSquare, faSearch, faHome, faWifi,faBath, faTv, faKitchenSet, faCar, faPaw, faUmbrellaBeach, faPersonSwimming, faHouseMedical, faBed } from "@fortawesome/free-solid-svg-icons";
 
 export const App = () => {
     return (
