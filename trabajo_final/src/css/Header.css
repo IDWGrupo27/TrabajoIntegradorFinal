@@ -1,4 +1,5 @@
 header {
+    position: relative;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -15,16 +16,21 @@ header {
 
 .logo {
     display: flex;
+    flex-direction: column;
     align-items: center;
     color: white;
     display: flex;
-    gap: 0.5rem;
+
+    font-size: 12px;
+    font-weight: bold;
+    font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
 }
 
 .logo img {
     border-radius: 1rem;
     padding: 2px;
-    background-color: rgb(255, 255, 255);
+    background-color: rgba(0, 0, 0, 0);
+    filter: invert(100%);
 }
 
 header a {
@@ -77,4 +83,18 @@ header a {
     font-size: 14px;
     font-weight: 600;
     color: white;
+}
+
+header button {
+    position: absolute;
+    left: 1rem;
+
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 75px !important;
+}
+
+header button:hover {
+    cursor: pointer !important;
 }
