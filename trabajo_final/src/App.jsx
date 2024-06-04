@@ -12,6 +12,16 @@ import {
     faShareFromSquare,
     faSearch,
     faHome,
+    faWifi,
+    faBath,
+    faTv,
+    faKitchenSet,
+    faCar,
+    faPaw,
+    faUmbrellaBeach,
+    faPersonSwimming,
+    faHouseMedical,
+    faBed,
 } from "@fortawesome/free-solid-svg-icons";
 
 export const App = () => {
