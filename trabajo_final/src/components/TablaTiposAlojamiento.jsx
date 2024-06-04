@@ -67,6 +67,13 @@ export const TablaTiposAlojamiento = () => {
                     </tr>
                 </thead>
                 <tbody>
+                    {listaTiposAlojamiento.length === 0 ? (
+                        <tr>
+                            <td></td>
+                            <td>Cargando...</td>
+                            <td></td>
+                        </tr>
+                    ) : null}
                     {listaTiposAlojamiento
                         ? listaTiposAlojamiento.map((tipoAlojamiento) => (
                               <tr key={tipoAlojamiento.idTipoAlojamiento}>
