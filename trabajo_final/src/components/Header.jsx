@@ -16,14 +16,14 @@ export const Header = () => {
             </div>
 
             <div className="header-menu">
-                <Link className="menu-item" to={"/informacion-institucional"}>
-                    <span>Mi reserva</span>
-                </Link>
                 <Link className="menu-item" to={"/contacto"}>
                     <span>Contacto</span>
                 </Link>
                 <Link className="menu-item" to={"/informacion-institucional"}>
                     <span>Información</span>
+                </Link>
+                <Link className="menu-item" to={"/administracion"}>
+                    <span>Administración</span>
                 </Link>
             </div>
 

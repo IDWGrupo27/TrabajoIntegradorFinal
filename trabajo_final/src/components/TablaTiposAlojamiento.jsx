@@ -6,7 +6,7 @@ import {
     faPencil,
     faArrowRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export const TablaTiposAlojamiento = () => {
     const {
@@ -59,100 +59,105 @@ export const TablaTiposAlojamiento = () => {
         <div className="tipos-alojamientos">
             <h2>Tipos de alojamiento</h2>
             <table>
-                <tr>
-                    <th>Id</th>
-                    <th>Tipo</th>
-                    <th>Acción</th>
-                </tr>
-                {listaTiposAlojamiento
-                    ? listaTiposAlojamiento.map((tipoAlojamiento) => (
-                          <tr key={tipoAlojamiento.idTipoAlojamiento}>
-                              <td>{tipoAlojamiento.idTipoAlojamiento}</td>
-                              {editId !== tipoAlojamiento.idTipoAlojamiento ? (
-                                  <td>{tipoAlojamiento.Descripcion}</td>
-                              ) : (
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Tipo</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {listaTiposAlojamiento
+                        ? listaTiposAlojamiento.map((tipoAlojamiento) => (
+                              <tr key={tipoAlojamiento.idTipoAlojamiento}>
+                                  <td>{tipoAlojamiento.idTipoAlojamiento}</td>
+                                  {editId !==
+                                  tipoAlojamiento.idTipoAlojamiento ? (
+                                      <td>{tipoAlojamiento.Descripcion}</td>
+                                  ) : (
+                                      <td>
+                                          <input
+                                              value={editDescription}
+                                              onChange={(e) => {
+                                                  setEditDescription(
+                                                      e.target.value
+                                                  );
+                                              }}
+                                          />
+                                      </td>
+                                  )}
                                   <td>
-                                      <input
-                                          value={editDescription}
-                                          onChange={(e) => {
-                                              setEditDescription(
-                                                  e.target.value
-                                              );
-                                          }}
-                                      />
-                                  </td>
-                              )}
-                              <td>
-                                  <button
-                                      title="Eliminar"
-                                      onClick={() =>
-                                          handleBorrarTipoAlojamiento(
-                                              tipoAlojamiento.idTipoAlojamiento
-                                          )
-                                      }
-                                  >
-                                      <FontAwesomeIcon
-                                          width={"10px"}
-                                          icon={faMinus}
-                                      />
-                                  </button>
-                                  <button
-                                      title="Editar"
-                                      onClick={() =>
-                                          handleActivateEdit(
-                                              tipoAlojamiento.idTipoAlojamiento,
-                                              tipoAlojamiento.Descripcion
-                                          )
-                                      }
-                                  >
-                                      <FontAwesomeIcon
-                                          width={"13px"}
-                                          icon={faPencil}
-                                      />
-                                  </button>
+                                      <button
+                                          title="Eliminar"
+                                          onClick={() =>
+                                              handleBorrarTipoAlojamiento(
+                                                  tipoAlojamiento.idTipoAlojamiento
+                                              )
+                                          }
+                                      >
+                                          <FontAwesomeIcon
+                                              width={"10px"}
+                                              icon={faMinus}
+                                          />
+                                      </button>
+                                      <button
+                                          title="Editar"
+                                          onClick={() =>
+                                              handleActivateEdit(
+                                                  tipoAlojamiento.idTipoAlojamiento,
+                                                  tipoAlojamiento.Descripcion
+                                              )
+                                          }
+                                      >
+                                          <FontAwesomeIcon
+                                              width={"13px"}
+                                              icon={faPencil}
+                                          />
+                                      </button>
 
-                                  <button
-                                      title="Guardar cambios"
-                                      disabled={
-                                          editId !==
-                                          tipoAlojamiento.idTipoAlojamiento
-                                      }
-                                      onClick={() =>
-                                          handleEditarTipoAlojamiento()
-                                      }
-                                  >
-                                      <FontAwesomeIcon
-                                          width={"13px"}
-                                          icon={faArrowRightFromBracket}
-                                      />
-                                  </button>
-                              </td>
-                          </tr>
-                      ))
-                    : null}
-                <tr>
-                    <td>Nuevo</td>
-                    <td>
-                        <input
-                            value={nuevoTipoAlojamiento}
-                            onChange={(e) => {
-                                setNuevoTipoAlojamiento(e.target.value);
-                            }}
-                            type="text"
-                        />
-                    </td>
-                    <td>
-                        <button
-                            title="Crear"
-                            onClick={handleCrearTipoAlojamiento}
-                        >
-                            <FontAwesomeIcon
-                                width={"13px"}
-                                icon={faArrowRightFromBracket}
+                                      <button
+                                          title="Guardar cambios"
+                                          disabled={
+                                              editId !==
+                                              tipoAlojamiento.idTipoAlojamiento
+                                          }
+                                          onClick={() =>
+                                              handleEditarTipoAlojamiento()
+                                          }
+                                      >
+                                          <FontAwesomeIcon
+                                              width={"13px"}
+                                              icon={faArrowRightFromBracket}
+                                          />
+                                      </button>
+                                  </td>
+                              </tr>
+                          ))
+                        : null}
+                    <tr>
+                        <td>Nuevo</td>
+                        <td>
+                            <input
+                                value={nuevoTipoAlojamiento}
+                                onChange={(e) => {
+                                    setNuevoTipoAlojamiento(e.target.value);
+                                }}
+                                type="text"
                             />
-                        </button>
-                    </td>
-                </tr>
+                        </td>
+                        <td>
+                            <button
+                                title="Crear"
+                                onClick={handleCrearTipoAlojamiento}
+                            >
+                                <FontAwesomeIcon
+                                    width={"13px"}
+                                    icon={faArrowRightFromBracket}
+                                />
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
             </table>
         </div>
     );

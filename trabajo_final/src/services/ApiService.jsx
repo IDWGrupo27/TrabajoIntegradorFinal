@@ -13,6 +13,11 @@ export const ApiService = ({ children }) => {
             .then((response) => response.json())
             .then((response) => {
                 setListaAlojamientos(response);
+            })
+            .catch((error) => {
+                console.log(
+                    "Error al obtener alojamientos. Mostrando solo alojamientos estáticos"
+                );
             });
     };
 
@@ -22,7 +27,34 @@ export const ApiService = ({ children }) => {
             .then((response) => response.json())
             .then((response) => {
                 setListaTiposAlojamiento(response);
+            })
+            .catch((error) => {
+                setListaTiposAlojamiento([
+                    {
+                        idTipoAlojamiento: 1,
+                        Descripcion: "Hotel",
+                    },
+                    {
+                        idTipoAlojamiento: 2,
+                        Descripcion: "Hostal",
+                    },
+                    {
+                        idTipoAlojamiento: 3,
+                        Descripcion: "Departamento",
+                    },
+                    {
+                        idTipoAlojamiento: 4,
+                        Descripcion: "Casa",
+                    },
+                    {
+                        idTipoAlojamiento: 5,
+                        Descripcion: "Cabaña",
+                    },
+                ]);
             });
+        console.log(
+            "Error al obtener tipos de alojamiento. Mostrando solo tipos estáticos"
+        );
     };
 
     const crearTipoAlojamiento = (alojamiento) => {
@@ -69,6 +101,20 @@ export const ApiService = ({ children }) => {
         });
     };
 
+    /**
+     * Una vez realizado el fetch, buscar el tipo de alojamiento en la lista por ID.
+     */
+    const getTipoAlojamiento = (id) => {
+        let tipoAlojamiento = null;
+        for (const tipo of listaTiposAlojamiento) {
+            if (tipo.idTipoAlojamiento === id) {
+                tipoAlojamiento = tipo;
+                break;
+            }
+        }
+        return tipoAlojamiento;
+    };
+
     useEffect(() => {
         fetchAlojamientos();
         fetchTiposAlojamiento();
@@ -83,6 +129,7 @@ export const ApiService = ({ children }) => {
                 borrarTipoAlojamiento,
                 editarTipoAlojamiento,
                 listaAlojamientos,
+                getTipoAlojamiento,
             }}
         >
             {children}

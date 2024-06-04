@@ -12,6 +12,8 @@
 }
 
 .hotel a {
+    color: white;
+    font-weight: bold;
     font-size: 20px;
     text-decoration: none;
 }
@@ -184,7 +186,9 @@ ul {
     margin: 5px 3px;
     cursor: pointer;
     font-size: 20px;
-    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 div.active {
