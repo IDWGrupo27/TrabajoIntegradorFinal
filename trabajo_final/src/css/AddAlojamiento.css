@@ -1,0 +1,38 @@
+.form-box {
+    border: 2px solid #ccc;
+    border-radius: 30px;
+    padding: 3rem;
+    padding-right: 8rem;
+    
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: start;
+}
+
+.formulario input {
+    width: 20rem;
+}
+
+
+.formulario label {
+    padding-top: 1.5rem;
+    font-size: 15px;
+}
+
+.seleccionar-tipo {
+    padding: 0.5rem 1rem;
+}
+
+h1 {
+    padding-bottom: 4rem;
+}
+
+.btn-form {
+    margin-top: 2rem;
+    width: 10rem;
+    justify-items: center;
+}

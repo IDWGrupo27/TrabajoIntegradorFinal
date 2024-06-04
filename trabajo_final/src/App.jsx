@@ -7,6 +7,7 @@ import { Contacto } from "./routes/Contacto";
 import { Institucional } from "./routes/Institucional";
 import { MensajeEnviado } from "./routes/MensajeEnviado";
 import { Administracion } from "./routes/Administracion";
+import{ AddAlojamiento } from "./form/AddAlojamiento";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import {
     faShareFromSquare,
@@ -38,6 +39,8 @@ export const App = () => {
                 />
                 <Route path="/mensaje-enviado" element={<MensajeEnviado />} />
                 <Route path="/administracion" element={<Administracion />} />
+                <Route  path="/adherir-alojamiento" element={<AddAlojamiento />} />
+
             </Routes>
             <Footer />
         </>
