@@ -34,7 +34,8 @@ const camelize = (str) => {
 };
 
 export const Home = () => {
-    const { listaAlojamientos, getTipoAlojamiento } = useApi();
+    const { listaAlojamientos, listaTiposAlojamiento, getTipoAlojamiento } =
+        useApi();
 
     return (
         <main>
@@ -188,37 +189,23 @@ export const Home = () => {
             </section>
 
             <section>
-                <div className="Tipos-Aloja">
+                <div className="tipos-alojamiento">
                     <h2>Tipos de Alojamiento</h2>
-                    <div className="carta">
-                        <h3>Hoteles</h3>
-                        <p>
-                            Experiencia única, arte, descanso y naturaleza.
-                            Descubre el lujo y relax que te mereces. ¡Reserva
-                            hoy! Promoción 2x1. Promociones todo el año.
-                        </p>
-                        <button type="submit">+ info</button>
-                    </div>
-
-                    <div className="carta">
-                        <h3>Departamentos</h3>
-                        <p>
-                            Experiencia única, arte, descanso y naturaleza.
-                            Descubre el lujo y relax que te mereces. ¡Reserva
-                            hoy! Promoción 2x1. Promociones todo el año.
-                        </p>
-
-                        <button type="submit">+ info</button>
-                    </div>
-
-                    <div className="carta">
-                        <h3>Cabañas</h3>
-                        <p>
-                            Experiencia única, arte, descanso y naturaleza.
-                            Descubre el lujo y relax que te mereces. ¡Reserva
-                            hoy! Promoción 2x1. Promociones todo el año.
-                        </p>
-                        <button type="submit">+ info</button>
+                    <p>
+                        Experiencia única, arte, descanso y naturaleza. Descubre
+                        el lujo y relax que te mereces. ¡Reserva hoy! Promoción
+                        2x1. Promociones todo el año.
+                    </p>
+                    <div className="contenedor-cartas">
+                        {listaTiposAlojamiento.map((t) => {
+                            return (
+                                <div className="carta">
+                                    <button type="submit">
+                                        {t.Descripcion}
+                                    </button>
+                                </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

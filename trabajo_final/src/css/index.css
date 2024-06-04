@@ -126,6 +126,22 @@ a:not(.image-button) {
     gap: 1rem;
 }
 
+.tipos-alojamiento {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.tipos-alojamiento .contenedor-cartas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+.tipos-alojamiento button {
+    width: 100px;
+}
+
 /* Items */
 
 .search-form {
