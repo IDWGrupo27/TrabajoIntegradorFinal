@@ -1,6 +1,6 @@
 # Trabajo final IDW
 
-El proyecto contiene la aplicación web en `trabajo_final` la API proporcionada por la cátedra en la carpeta `idwApi`.
+El proyecto contiene la aplicación web en `trabajo_final` y la API proporcionada por la cátedra en la carpeta `idwApi`.
 
 La app funciona tanto junto con la API como en modo estático si es que no está iniciado el servidor backend.
 
