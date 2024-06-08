@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../css/Administracion.css";
 import TablaTiposAlojamiento from "../components/TablaTiposAlojamiento";
+import AddAlojamiento from "../components/AddAlojamiento";
 
 export const Administracion = () => {
     return (
@@ -9,7 +10,10 @@ export const Administracion = () => {
                 <h1>Administración</h1>
             </section>
             <section>
-                <TablaTiposAlojamiento></TablaTiposAlojamiento>
+                <TablaTiposAlojamiento />
+            </section>
+            <section>
+                <AddAlojamiento />
             </section>
         </main>
     );
