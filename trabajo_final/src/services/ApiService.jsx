@@ -1,4 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
+import {
+    faWifi,
+    faPersonSwimming,
+    faPaw,
+} from "@fortawesome/free-solid-svg-icons";
+import { alojamientosEstaticos } from "../static/alojamientos";
 
 export const ApiServiceContext = createContext();
 
@@ -6,6 +12,9 @@ export const ApiService = ({ children }) => {
     const APIURL = "http://localhost:3001/";
     const [listaAlojamientos, setListaAlojamientos] = useState([]);
     const [listaTiposAlojamiento, setListaTiposAlojamiento] = useState([]);
+    const [listaServicios, setListaServicios] = useState([]);
+    const [listaAlojamientosServicios, setListaAlojamientosServicios] =
+        useState([]);
 
     // ************ Alojamientos ************
     const fetchAlojamientos = () => {
@@ -18,7 +27,26 @@ export const ApiService = ({ children }) => {
                 console.log(
                     "Error al obtener alojamientos. Mostrando solo alojamientos estáticos"
                 );
+                setListaAlojamientos(alojamientosEstaticos);
             });
+    };
+
+    const crearAlojamiento = (alojamiento) => {
+        try {
+            fetch(APIURL + "alojamiento/createAlojamiento", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(alojamiento),
+            }).then((res) => {
+                if (res.ok) {
+                    fetchAlojamientos();
+                }
+            });
+        } catch (error) {
+            console.log("Error al crear un nuevo alojamiento.");
+        }
     };
 
     // ************ Tipos de alojamientos ************
@@ -49,6 +77,14 @@ export const ApiService = ({ children }) => {
                     {
                         idTipoAlojamiento: 5,
                         Descripcion: "Cabaña",
+                    },
+                    {
+                        idTipoAlojamiento: 6,
+                        Descripcion: "Casa de campo",
+                    },
+                    {
+                        idTipoAlojamiento: 7,
+                        Descripcion: "Albergue",
                     },
                 ]);
             });
@@ -115,9 +151,62 @@ export const ApiService = ({ children }) => {
         return tipoAlojamiento;
     };
 
+    /// ******************* Servicios de los alojamientos ******************* ///
+    const fetchServicios = () => {
+        fetch(APIURL + "servicio/getAllServicios")
+            .then((res) => res.json())
+            .then((data) => {
+                setListaServicios(data);
+            })
+            .catch((error) => {
+                console.log(
+                    "No se pudieron cargar servicios. Mostrando servicios estáticos"
+                );
+                setListaServicios([
+                    {
+                        idServicio: 1,
+                        Nombre: "Internet",
+                    },
+                    {
+                        idServicio: 2,
+                        Nombre: "Se permiten mascotas",
+                    },
+                    {
+                        idServicio: 3,
+                        Nombre: "Acceso a piscina",
+                    },
+                ]);
+            });
+    };
+
+    /// ******************* Relaciones servicio-alojamiento ******************* ///
+    const fetchAlojamientosServivios = () => {
+        fetch(APIURL + "alojamientosServicios/getAllAlojamientoServicios")
+            .then((res) => res.json())
+            .then((data) => {
+                setListaAlojamientosServicios(data);
+            })
+            .catch((error) => {
+                setListaAlojamientosServicios([
+                    { idAlojamiento: 1, idServicio: 1 },
+                    { idAlojamiento: 2, idServicio: 2 },
+                    { idAlojamiento: 3, idServicio: 1 },
+                    { idAlojamiento: 4, idServicio: 1 },
+                    { idAlojamiento: 4, idServicio: 2 },
+                    { idAlojamiento: 5, idServicio: 1 },
+                    { idAlojamiento: 5, idServicio: 2 },
+                    { idAlojamiento: 6, idServicio: 1 },
+                    { idAlojamiento: 6, idServicio: 2 },
+                    { idAlojamiento: 6, idServicio: 3 },
+                ]);
+            });
+    };
+
     useEffect(() => {
         fetchAlojamientos();
         fetchTiposAlojamiento();
+        fetchServicios();
+        fetchAlojamientosServivios();
     }, []);
 
     return (
@@ -130,6 +219,9 @@ export const ApiService = ({ children }) => {
                 editarTipoAlojamiento,
                 listaAlojamientos,
                 getTipoAlojamiento,
+                crearAlojamiento,
+                listaServicios,
+                listaAlojamientosServicios,
             }}
         >
             {children}

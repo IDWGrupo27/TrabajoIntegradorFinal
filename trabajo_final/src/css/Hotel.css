@@ -1,10 +1,13 @@
 .hotel {
+    position: relative;
     display: flex;
     flex-direction: column;
+
     border-radius: 0.5rem;
     width: 400px;
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.25);
     transition-duration: 0.25s;
+    text-align: center;
 }
 
 .hotel:hover {
@@ -12,9 +15,8 @@
 }
 
 .hotel a {
-    color: white;
     font-weight: bold;
-    font-size: 20px;
+    font-size: 22px;
     text-decoration: none;
 }
 
@@ -31,21 +33,12 @@
     align-items: start;
     /*height: 100px;*/
     padding: 0.5rem;
-    background-color: rgb(73, 73, 90);
     border-bottom-left-radius: 0.5rem;
     border-bottom-right-radius: 0.5rem;
-    color: white;
 }
 
 .hotel-info span {
     display: flex;
-    align-self: flex-end;
-    font-size: 15px;
-}
-
-.hotel-info span {
-    display: flex;
-    align-self: flex-end;
     font-size: 15px;
 }
 
@@ -202,12 +195,45 @@ div.active {
     height: 200px;
 }
 
-.info-descripcion {
+.hotel .info-descripcion {
     display: flex;
+    align-items: center;
+    justify-content: center;
     font-size: 15px;
     font-weight: 500;
     gap: 10px;
     flex-wrap: wrap;
     margin-top: 10px;
     align-self: center;
+}
+
+.hotel .info-titulo {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.hotel .tipo {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+
+    border-radius: 1rem;
+    padding: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    font-weight: bold;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
+}
+
+.hotel .servicio {
+    border-radius: 1rem;
+    padding: 0.25rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+
+    color: white;
+    background-color: rgb(72, 124, 57);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.25);
 }

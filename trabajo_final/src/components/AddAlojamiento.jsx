@@ -4,7 +4,7 @@ import "../css/AddAlojamiento.css";
 import { useApi } from "../services/ApiService";
 
 export const AddAlojamiento = () => {
-    const { listaTiposAlojamiento } = useApi();
+    const { listaTiposAlojamiento, crearAlojamiento } = useApi();
 
     const [nuevoTitulo, setNuevoTitulo] = useState("");
     const [nuevaDescripcion, setNuevaDescripcion] = useState("");
@@ -15,6 +15,21 @@ export const AddAlojamiento = () => {
     const [nuevaCantidadBanios, setNuevaCantidadBanios] = useState(0);
     const [nuevoEstado, setNuevoEstado] = useState(false);
     const [nuevoIdTipoAlojamiento, setNuevoIdTipoAlojamiento] = useState(null);
+
+    const handleNuevoAlojamiento = () => {
+        const nuevoAlojamiento = {
+            Titulo: nuevoTitulo,
+            Descripcion: nuevaDescripcion,
+            Latitud: nuevaLatitud,
+            Longitud: nuevaLongitud,
+            PrecioPorDia: nuevoPrecioDia,
+            CantidadDormitorios: nuevaCantidadDormitorios,
+            CantidadBanios: nuevaCantidadBanios,
+            Estado: "Reservado",
+            TipoAlojamiento: nuevoIdTipoAlojamiento,
+        };
+        crearAlojamiento(nuevoAlojamiento);
+    };
 
     return (
         <div className="add-form">
@@ -47,7 +62,11 @@ export const AddAlojamiento = () => {
                             setNuevoIdTipoAlojamiento(e.target.value)
                         }
                         className="seleccionar-tipo"
+                        required
                     >
+                        <option value={null} disabled selected hidden>
+                            Sin elegir
+                        </option>
                         {listaTiposAlojamiento.map((t) => (
                             <option value={t.idTipoAlojamiento}>
                                 {t.Descripcion}
@@ -102,7 +121,12 @@ export const AddAlojamiento = () => {
                         required
                     />
 
-                    <button className="btn-form">Enviar</button>
+                    <button
+                        onClick={handleNuevoAlojamiento}
+                        className="btn-form"
+                    >
+                        Enviar
+                    </button>
                 </form>
             </div>
         </div>

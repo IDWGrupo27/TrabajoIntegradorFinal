@@ -1,9 +1,12 @@
+.add-form {
+    margin: 1rem;
+}
+
 .form-box {
     border: 2px solid #ccc;
     border-radius: 30px;
     padding: 3rem;
     padding-right: 8rem;
-    
 }
 
 .formulario {
@@ -16,7 +19,6 @@
 .formulario input {
     width: 20rem;
 }
-
 
 .formulario label {
     padding-top: 1.5rem;
