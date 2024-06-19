@@ -139,10 +139,13 @@ export const ApiService = ({ children }) => {
     };
 
     const actualizarTituloAlojamiento = (id, titulo) => {
-        let alojamiento = listaAlojamientos.find((a) => a.idAlojamiento === id);
+        let alojamiento = structuredClone(
+            listaAlojamientos.find((a) => a.idAlojamiento === id)
+        );
+        delete alojamiento["servicios"];
+        delete alojamiento["idAlojamiento"];
         if (alojamiento) {
             alojamiento.Titulo = titulo;
-            console.log("x");
             try {
                 fetch(`${APIURL}alojamiento/putAlojamiento/${id}`, {
                     method: "PUT",
@@ -219,10 +222,10 @@ export const ApiService = ({ children }) => {
                         Descripcion: "Albergue",
                     },
                 ]);
+                console.log(
+                    "Error al obtener tipos de alojamiento. Mostrando solo tipos estáticos"
+                );
             });
-        console.log(
-            "Error al obtener tipos de alojamiento. Mostrando solo tipos estáticos"
-        );
     };
 
     const crearTipoAlojamiento = (alojamiento) => {

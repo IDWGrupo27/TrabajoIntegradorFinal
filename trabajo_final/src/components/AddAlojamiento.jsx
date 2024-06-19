@@ -58,17 +58,21 @@ export const AddAlojamiento = () => {
                         Tipo de alojamiento
                     </label>
                     <select
+                        defaultValue={"DEFAULT"}
                         onChange={(e) =>
                             setNuevoIdTipoAlojamiento(e.target.value)
                         }
                         className="seleccionar-tipo"
                         required
                     >
-                        <option value={null} disabled selected hidden>
+                        <option value={"DEFAULT"} disabled>
                             Sin elegir
                         </option>
                         {listaTiposAlojamiento.map((t) => (
-                            <option value={t.idTipoAlojamiento}>
+                            <option
+                                key={t.idTipoAlojamiento}
+                                value={t.idTipoAlojamiento}
+                            >
                                 {t.Descripcion}
                             </option>
                         ))}

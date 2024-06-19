@@ -96,7 +96,7 @@ export const Hotel = ({ hotel }) => {
     return (
         <div className="hotel">
             <span className="tipo">
-                {tipoAlojamiento === null
+                {tipoAlojamiento === "" || tipoAlojamiento === null
                     ? "Sin clasificar"
                     : tipoAlojamiento.Descripcion}
             </span>
