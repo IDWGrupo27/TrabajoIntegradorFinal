@@ -1,0 +1,68 @@
+.tabla-simple {
+    min-width: 400px;
+    width: 40%;
+}
+
+.tabla-simple.alojamientos {
+    width: 100%;
+}
+
+.tabla-simple table {
+    font-size: 14px;
+    width: 100%;
+}
+
+.tabla-simple tr {
+    height: 30px;
+}
+
+.tabla-simple td,
+.tabla-simple th {
+    position: relative;
+    border-radius: 10px;
+}
+
+.tabla-simple td:nth-child(1) {
+    width: 15%;
+}
+
+.tabla-simple td:nth-child(3) {
+    width: 150px;
+}
+
+.tabla-simple table input {
+    height: 26px;
+    min-width: 150px;
+    width: 45%;
+
+    padding: 0px;
+    margin: 0px;
+    border: 0px;
+    border-radius: 0px;
+    border: 1px solid rgb(196, 196, 196);
+    box-shadow: none;
+}
+
+.tabla-simple table button {
+    height: 24px;
+    width: 24px;
+    padding: 0px;
+    margin: 0px;
+    margin-left: 5px;
+    margin-right: 5px;
+    border-radius: 1rem;
+    font-size: 16px;
+}
+
+.tabla-simple table button:disabled {
+    background-color: rgb(177, 170, 157);
+}
+
+.tabla-simple th {
+    background-color: var(--naranja);
+    color: white;
+}
+
+.tabla-simple tr:nth-child(odd) {
+    background-color: rgb(241, 241, 241);
+}

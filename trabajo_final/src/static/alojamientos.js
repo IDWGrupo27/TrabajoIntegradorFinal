@@ -72,18 +72,6 @@ export const alojamientosEstaticos = [
         TipoAlojamiento: 5,
     },
     {
-        idAlojamiento: 6,
-        Titulo: "Apart Hotel Carilo",
-        Descripcion: "",
-        Latitud: "-54.80943100",
-        Longitud: "-68.31987000",
-        PrecioPorDia: "20000.00",
-        CantidadDormitorios: 2,
-        CantidadBanios: 1,
-        Estado: "Disponible",
-        TipoAlojamiento: 1,
-    },
-    {
         idAlojamiento: 7,
         Titulo: "Hotel Estatico",
         Descripcion: "Hotel de prueba 1",

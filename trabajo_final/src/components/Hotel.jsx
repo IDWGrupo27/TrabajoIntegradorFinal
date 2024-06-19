@@ -1,14 +1,40 @@
 import React, { useRef, useState, useEffect } from "react";
+
 import "../css/Hotel.css";
-import {
-    faWifi,
-    faBed,
-    faPersonSwimming,
-    faPaw,
-} from "@fortawesome/free-solid-svg-icons";
+
+import { faBed, faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-export const Hotel = (props) => {
+import { useApi } from "../services/ApiService";
+import { useIcons } from "../services/IconsService";
+
+import { images } from "../img/all";
+
+/**
+ * Devuelve el nombre del hotel en camelCase para buscarlo en las imágenes estáticas
+ */
+const camelize = (str) => {
+    const newStr = str
+        .replace(/ñ/g, "n")
+        .replace(/(?:^\w|[A-Z]|\b\w)/g, function (word, index) {
+            return index === 0 ? word.toLowerCase() : word.toUpperCase();
+        })
+        .replace(/\s+/g, "");
+    return newStr;
+};
+
+export const Hotel = ({ hotel }) => {
+    const {
+        listaTiposAlojamiento,
+        listaServicios,
+        listaAlojamientosServicios,
+    } = useApi();
+    const { getServiceIcon } = useIcons();
+
+    const [tipoAlojamiento, setTipoAlojamiento] = useState("");
+    const [listaServiciosHotel, setListaServiciosHotel] = useState([]);
+    const [hotelImages, setHotelImages] = useState(images.ninguna);
+
     const listRef = useRef();
     const [imageIndex, setImageIndex] = useState(0);
 
@@ -24,14 +50,58 @@ export const Hotel = (props) => {
         }
     }, [imageIndex]);
 
+    useEffect(() => {
+        const nuevaListaServicios = [];
+        for (let i = 0; i < listaAlojamientosServicios.length; i++) {
+            if (
+                listaAlojamientosServicios[i].idAlojamiento ===
+                hotel.idAlojamiento
+            ) {
+                // si se encuentra la relación servicio-alojamiento, se busca el servicio para unirlo al array
+                const servicio = listaServicios.find(
+                    (servicio) =>
+                        servicio.idServicio ===
+                        listaAlojamientosServicios[i].idServicio
+                );
+                nuevaListaServicios.push(servicio);
+            }
+        }
+        setListaServiciosHotel(nuevaListaServicios);
+    }, [listaServicios]);
+
+    useEffect(() => {
+        const hotelName = camelize(hotel.Titulo);
+        if (images[hotelName]) {
+            setHotelImages(images[hotelName]);
+        } else {
+            setHotelImages(images.ninguna);
+        }
+    }, []);
+
+    useEffect(() => {
+        for (let i = 0; i < listaTiposAlojamiento.length; i++) {
+            if (
+                hotel.TipoAlojamiento ===
+                listaTiposAlojamiento[i].idTipoAlojamiento
+            ) {
+                setTipoAlojamiento(listaTiposAlojamiento[i]);
+            }
+        }
+    }, [listaTiposAlojamiento]);
+
     const circleSlide = (slideIndex) => {
         setImageIndex(slideIndex);
     };
 
     return (
         <div className="hotel">
+            <span className="tipo">
+                {tipoAlojamiento === null
+                    ? "Sin clasificar"
+                    : tipoAlojamiento.Descripcion}
+            </span>
             <div style={{ alignSelf: "center", marginTop: "10px" }}>
-                {props.disponible ? (
+                {hotel.Estado === "Disponible" ? (
                     <span
                         style={{
                             color: "green",
@@ -56,7 +126,7 @@ export const Hotel = (props) => {
             <div className="slider-container">
                 <div className="container-images">
                     <ul ref={listRef}>
-                        {props.imgSrc.map((item) => {
+                        {hotelImages.map((item) => {
                             return (
                                 <li key={item.id}>
                                     <img src={item.imgUrl} />
@@ -81,7 +151,7 @@ export const Hotel = (props) => {
                 </div>
             </div>
             <div className="dots-container">
-                {props.imgSrc.map((_, idx) => (
+                {hotelImages.map((_, idx) => (
                     <div
                         key={idx}
                         className={`dot-container-item ${
@@ -94,31 +164,35 @@ export const Hotel = (props) => {
                 ))}
             </div>
             <div className="hotel-info">
-                <p>{props.tipo}</p>
-                <span>✭ {props.puntuacion}</span>
-                <div className="">
-                    <a href="https://www.hotelkilton.com.ar/">{props.name}</a>
+                <div className="info-titulo">
+                    <a href="https://www.hotelkilton.com.ar/">{hotel.Titulo}</a>
                 </div>
                 <div className="info-descripcion">
-                    <div>
-                        {" "}
-                        <FontAwesomeIcon icon={faWifi} /> {props.wifi} -{" "}
+                    <div className="servicio">
+                        <FontAwesomeIcon icon={faBed} />{" "}
+                        {hotel.CantidadDormitorios} dormitorios
                     </div>
-                    <div>
-                        {" "}
-                        <FontAwesomeIcon icon={faBed} /> {props.dormitorios}
-                    </div>
-                </div>
-                <div className="info-descripcion">
-                    <div>
-                        {" "}
-                        <FontAwesomeIcon icon={faPaw} /> {props.mascotas} -{" "}
-                    </div>
-                    <div>
-                        {" "}
-                        <FontAwesomeIcon icon={faPersonSwimming} />{" "}
-                        {props.piscina}
-                    </div>
+                    {listaServiciosHotel.length === 0 ? (
+                        <>
+                            {" "}
+                            <div>Cargando servicios...</div>
+                            <FontAwesomeIcon
+                                className="spinner"
+                                icon={faSpinner}
+                            />
+                        </>
+                    ) : (
+                        listaServiciosHotel.map((servicio) => (
+                            <div key={servicio.idServicio} className="servicio">
+                                {
+                                    <FontAwesomeIcon
+                                        icon={getServiceIcon(servicio.Nombre)}
+                                    />
+                                }{" "}
+                                {servicio.Nombre}
+                            </div>
+                        ))
+                    )}
                 </div>
             </div>
         </div>

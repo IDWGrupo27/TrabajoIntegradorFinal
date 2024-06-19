@@ -74,6 +74,17 @@ a:not(.image-button) {
     width: 100%;
 }
 
+/* Tipos frecuentes */
+.flex {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.flex.col {
+    flex-direction: column;
+}
+
 /* Contenedores */
 
 .col {

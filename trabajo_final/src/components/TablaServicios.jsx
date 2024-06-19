@@ -1,94 +1,91 @@
 import { useApi } from "../services/ApiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faPlus,
+    faSpinner,
     faMinus,
     faPencil,
     faFloppyDisk,
 } from "@fortawesome/free-solid-svg-icons";
+import "../css/TablaSimple.css";
+
 import { useEffect, useState } from "react";
 
-export const TablaTiposAlojamiento = () => {
-    const {
-        listaTiposAlojamiento,
-        crearTipoAlojamiento,
-        borrarTipoAlojamiento,
-        editarTipoAlojamiento,
-    } = useApi();
+export const TablaServicios = () => {
+    const { listaServicios, crearServicio, borrarServicio, editarServicio } =
+        useApi();
 
-    const [nuevoTipoAlojamiento, setNuevoTipoAlojamiento] = useState("");
+    const [nuevoServicio, setNuevoServicio] = useState("");
 
     const [editId, setEditId] = useState(null);
-    const [editDescription, setEditDescription] = useState("");
+    const [editNombre, setEditNombre] = useState("");
 
-    const handleActivateEdit = (id, description) => {
+    const handleActivateEdit = (id, nombre) => {
         if (editId === id) {
             setEditId(null);
-            setEditDescription("");
+            setEditNombre("");
         } else {
             setEditId(id);
-            setEditDescription(description);
+            setEditNombre(nombre);
         }
     };
 
-    const handleCrearTipoAlojamiento = () => {
-        if (nuevoTipoAlojamiento === "") {
-            alert("Ingresa un nombre para el nuevo tipo de alojamiento");
+    const handleCrearServicio = () => {
+        if (nuevoServicio === "") {
+            alert("Ingrese un nombre para el nuevo servicio");
             return;
         }
-        crearTipoAlojamiento(nuevoTipoAlojamiento);
-        setNuevoTipoAlojamiento("");
+        crearServicio(nuevoServicio);
+        setNuevoServicio("");
     };
 
-    const handleBorrarTipoAlojamiento = (id) => {
+    const handleBorrarServicio = (id) => {
         let c = window.confirm(
-            "Se borrará el tipo de alojamiento con ID " + id
+            "Se borrará el servicio de alojamiento con ID " + id
         );
         if (c) {
-            borrarTipoAlojamiento(id);
+            borrarServicio(id);
         }
     };
 
-    const handleEditarTipoAlojamiento = () => {
-        editarTipoAlojamiento(editId, editDescription);
+    const handleEditarServicio = () => {
+        editarServicio(editId, editNombre);
         setEditId(null);
-        setEditDescription("");
+        setEditNombre("");
     };
 
     return (
         <div className="tabla-simple">
-            <h2>Tipos de alojamiento</h2>
+            <h2>Servicios</h2>
             <table>
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Tipo</th>
+                        <th>Servicio</th>
                         <th>Acción</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {listaTiposAlojamiento.length === 0 ? (
+                    {listaServicios.length === 0 ? (
                         <tr>
                             <td></td>
-                            <td>Cargando...</td>
+                            <td>
+                                Cargando... <FontAwesomeIcon icon={faSpinner} />
+                            </td>
                             <td></td>
                         </tr>
                     ) : null}
-                    {listaTiposAlojamiento
-                        ? listaTiposAlojamiento.map((tipoAlojamiento) => (
-                              <tr key={tipoAlojamiento.idTipoAlojamiento}>
-                                  <td>{tipoAlojamiento.idTipoAlojamiento}</td>
-                                  {editId !==
-                                  tipoAlojamiento.idTipoAlojamiento ? (
-                                      <td>{tipoAlojamiento.Descripcion}</td>
+                    {listaServicios
+                        ? listaServicios.map((servicio) => (
+                              <tr key={servicio.idServicio}>
+                                  <td>{servicio.idServicio}</td>
+                                  {editId !== servicio.idServicio ? (
+                                      <td>{servicio.Nombre}</td>
                                   ) : (
                                       <td>
                                           <input
-                                              value={editDescription}
+                                              value={editNombre}
                                               onChange={(e) => {
-                                                  setEditDescription(
-                                                      e.target.value
-                                                  );
+                                                  setEditNombre(e.target.value);
                                               }}
                                           />
                                       </td>
@@ -97,8 +94,8 @@ export const TablaTiposAlojamiento = () => {
                                       <button
                                           title="Eliminar"
                                           onClick={() =>
-                                              handleBorrarTipoAlojamiento(
-                                                  tipoAlojamiento.idTipoAlojamiento
+                                              handleBorrarServicio(
+                                                  servicio.idServicio
                                               )
                                           }
                                       >
@@ -111,8 +108,8 @@ export const TablaTiposAlojamiento = () => {
                                           title="Editar"
                                           onClick={() =>
                                               handleActivateEdit(
-                                                  tipoAlojamiento.idTipoAlojamiento,
-                                                  tipoAlojamiento.Descripcion
+                                                  servicio.idServicio,
+                                                  servicio.Nombre
                                               )
                                           }
                                       >
@@ -125,12 +122,9 @@ export const TablaTiposAlojamiento = () => {
                                       <button
                                           title="Guardar cambios"
                                           disabled={
-                                              editId !==
-                                              tipoAlojamiento.idTipoAlojamiento
+                                              editId !== servicio.idServicio
                                           }
-                                          onClick={() =>
-                                              handleEditarTipoAlojamiento()
-                                          }
+                                          onClick={() => handleEditarServicio()}
                                       >
                                           <FontAwesomeIcon
                                               width={"13px"}
@@ -145,18 +139,15 @@ export const TablaTiposAlojamiento = () => {
                         <td>Nuevo</td>
                         <td>
                             <input
-                                value={nuevoTipoAlojamiento}
+                                value={nuevoServicio}
                                 onChange={(e) => {
-                                    setNuevoTipoAlojamiento(e.target.value);
+                                    setNuevoServicio(e.target.value);
                                 }}
                                 type="text"
                             />
                         </td>
                         <td>
-                            <button
-                                title="Crear"
-                                onClick={handleCrearTipoAlojamiento}
-                            >
+                            <button title="Crear" onClick={handleCrearServicio}>
                                 <FontAwesomeIcon
                                     width={"13px"}
                                     icon={faFloppyDisk}
@@ -170,4 +161,4 @@ export const TablaTiposAlojamiento = () => {
     );
 };
 
-export default TablaTiposAlojamiento;
+export default TablaServicios;

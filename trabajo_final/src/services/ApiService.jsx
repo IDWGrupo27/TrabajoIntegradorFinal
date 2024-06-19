@@ -16,6 +16,95 @@ export const ApiService = ({ children }) => {
     const [listaAlojamientosServicios, setListaAlojamientosServicios] =
         useState([]);
 
+    /// ******************* Relaciones servicio-alojamiento ******************* ///
+    const fetchAlojamientosServivios = () => {
+        fetch(APIURL + "alojamientosServicios/getAllAlojamientoServicios")
+            .then((res) => res.json())
+            .then((data) => {
+                setListaAlojamientosServicios(data);
+            })
+            .catch((error) => {
+                setListaAlojamientosServicios([
+                    { idAlojamiento: 1, idServicio: 1 },
+                    { idAlojamiento: 2, idServicio: 2 },
+                    { idAlojamiento: 3, idServicio: 1 },
+                    { idAlojamiento: 4, idServicio: 1 },
+                    { idAlojamiento: 4, idServicio: 2 },
+                    { idAlojamiento: 5, idServicio: 1 },
+                    { idAlojamiento: 5, idServicio: 2 },
+                    { idAlojamiento: 6, idServicio: 1 },
+                    { idAlojamiento: 6, idServicio: 2 },
+                    { idAlojamiento: 6, idServicio: 3 },
+                ]);
+            });
+    };
+
+    const actualizarAlojamientoServicios = async (
+        idAlojamiento,
+        listaServicios
+    ) => {
+        // Primero se borran de la base de datos las relaciones alojamiento-servicio que ya no serán
+        let alojamientoServiciosABorrar = [];
+        for (let i = 0; i < listaAlojamientosServicios.length; i++) {
+            if (listaAlojamientosServicios[i].idAlojamiento === idAlojamiento) {
+                alojamientoServiciosABorrar.push(listaAlojamientosServicios[i]);
+            }
+        }
+        const promises = alojamientoServiciosABorrar.map(
+            async (alojamientoServicio) => {
+                const response = await fetch(
+                    APIURL +
+                        "alojamientosServicios/deleteAlojamientoServicio/" +
+                        alojamientoServicio.idAlojamientoServicio,
+                    {
+                        method: "DELETE",
+                    }
+                );
+                return response.json();
+            }
+        );
+
+        // Si se borraron correctamente, se procede a cargar los nuevos
+        try {
+            await Promise.all(promises);
+            // Se cargan los nuevos
+            for (let i = 0; i < listaServicios.length; i++) {
+                let nuevoAS = {
+                    idAlojamiento: idAlojamiento,
+                    idServicio: listaServicios[i].idServicio,
+                };
+                console.log(nuevoAS);
+                fetch(
+                    APIURL + "alojamientosServicios/createAlojamientoServicio",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify(nuevoAS),
+                    }
+                ).then((response) => {
+                    if (response.ok) {
+                        fetchAlojamientosServivios();
+                    }
+                });
+            }
+        } catch (error) {
+            console.error("Error al borrar los alojamiento-servicios: ", error);
+        }
+
+        for (let i = 0; i < alojamientoServiciosABorrar.length; i++) {
+            fetch(
+                APIURL +
+                    "alojamientosServicios/deleteAlojamientoServicio/" +
+                    alojamientoServiciosABorrar[i].idAlojamientoServicio,
+                {
+                    method: "DELETE",
+                }
+            );
+        }
+    };
+
     // ************ Alojamientos ************
     const fetchAlojamientos = () => {
         fetch(APIURL + "alojamiento/getAlojamientos")
@@ -46,6 +135,49 @@ export const ApiService = ({ children }) => {
             });
         } catch (error) {
             console.log("Error al crear un nuevo alojamiento.");
+        }
+    };
+
+    const actualizarTituloAlojamiento = (id, titulo) => {
+        let alojamiento = listaAlojamientos.find((a) => a.idAlojamiento === id);
+        if (alojamiento) {
+            alojamiento.Titulo = titulo;
+            console.log("x");
+            try {
+                fetch(`${APIURL}alojamiento/putAlojamiento/${id}`, {
+                    method: "PUT",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(alojamiento),
+                }).then((res) => {
+                    if (res.ok) {
+                        fetchAlojamientos();
+                    }
+                });
+            } catch (error) {
+                console.log("Error al actualizar el titulo del alojamiento.");
+            }
+        }
+    };
+
+    const borrarAlojamiento = (idAlojamiento) => {
+        // Primero se borran las relaciones alojamiento-servicios
+        try {
+            actualizarAlojamientoServicios(idAlojamiento, []).then(() => {
+                fetch(
+                    APIURL + "alojamiento/deleteAlojamiento/" + idAlojamiento,
+                    {
+                        method: "DELETE",
+                    }
+                ).then((res) => {
+                    if (res.ok) {
+                        fetchAlojamientos();
+                    }
+                });
+            });
+        } catch (error) {
+            console.log("Error al borrar el alojamiento: " + error);
         }
     };
 
@@ -179,27 +311,38 @@ export const ApiService = ({ children }) => {
             });
     };
 
-    /// ******************* Relaciones servicio-alojamiento ******************* ///
-    const fetchAlojamientosServivios = () => {
-        fetch(APIURL + "alojamientosServicios/getAllAlojamientoServicios")
-            .then((res) => res.json())
-            .then((data) => {
-                setListaAlojamientosServicios(data);
-            })
-            .catch((error) => {
-                setListaAlojamientosServicios([
-                    { idAlojamiento: 1, idServicio: 1 },
-                    { idAlojamiento: 2, idServicio: 2 },
-                    { idAlojamiento: 3, idServicio: 1 },
-                    { idAlojamiento: 4, idServicio: 1 },
-                    { idAlojamiento: 4, idServicio: 2 },
-                    { idAlojamiento: 5, idServicio: 1 },
-                    { idAlojamiento: 5, idServicio: 2 },
-                    { idAlojamiento: 6, idServicio: 1 },
-                    { idAlojamiento: 6, idServicio: 2 },
-                    { idAlojamiento: 6, idServicio: 3 },
-                ]);
-            });
+    const crearServicio = (nombreServicio) => {
+        fetch(APIURL + "servicio/createServicio", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                Nombre: nombreServicio,
+            }),
+        }).then((response) => {
+            if (response.ok) {
+                fetchServicios();
+            }
+        });
+    };
+
+    const borrarServicio = (id) => {
+        fetch(APIURL + "servicio/deleteServicio/" + id, {
+            method: "DELETE",
+        }).then((res) => (res.ok ? fetchServicios() : null));
+    };
+
+    const editarServicio = (id, nombreServicio) => {
+        fetch(APIURL + "servicio/updateServicio/" + id, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                Nombre: nombreServicio,
+            }),
+        }).then((res) => (res.ok ? fetchServicios() : null));
     };
 
     useEffect(() => {
@@ -213,6 +356,8 @@ export const ApiService = ({ children }) => {
         <ApiServiceContext.Provider
             value={{
                 APIURL,
+                actualizarTituloAlojamiento,
+                borrarAlojamiento,
                 listaTiposAlojamiento,
                 crearTipoAlojamiento,
                 borrarTipoAlojamiento,
@@ -221,7 +366,11 @@ export const ApiService = ({ children }) => {
                 getTipoAlojamiento,
                 crearAlojamiento,
                 listaServicios,
+                crearServicio,
+                borrarServicio,
+                editarServicio,
                 listaAlojamientosServicios,
+                actualizarAlojamientoServicios,
             }}
         >
             {children}

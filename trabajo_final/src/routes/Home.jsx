@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { Outlet, Link } from "react-router-dom";
 import Hotel from "../components/Hotel";
-import Hotel2 from "../components/Hotel2";
 import "../css/index.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHome, faSearch, faSpinner } from "@fortawesome/free-solid-svg-icons";
@@ -86,7 +85,7 @@ export const Home = () => {
                             />
                         </div>
                     ) : (
-                        listaAlojamientos.map((a) => <Hotel2 hotel={a} />)
+                        listaAlojamientos.map((a) => <Hotel hotel={a} />)
                     )}
                 </div>
             </section>

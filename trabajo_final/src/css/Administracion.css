@@ -1,68 +1,8 @@
-.administracion section {
+.administracion section:not(:first-child) {
     display: flex;
-    align-items: center;
+    flex-direction: row;
+    align-items: flex-start;
     justify-content: center;
-}
-
-.administracion table {
-    font-size: 14px;
-    width: 100%;
-}
-
-.administracion tr {
-    height: 30px;
-}
-
-.administracion td,
-.administracion th {
-    position: relative;
-    border-radius: 10px;
-}
-
-.administracion td:nth-child(1) {
-    width: 15%;
-}
-.administracion td:nth-child(3) {
-    width: 150px;
-}
-
-.administracion table input {
-    height: 26px;
-    width: 45%;
-
-    padding: 0px;
-    margin: 0px;
-    border: 0px;
-    border-radius: 0px;
-    border: 1px solid rgb(196, 196, 196);
-    box-shadow: none;
-}
-
-.administracion table button {
-    height: 24px;
-    width: 24px;
-    padding: 0px;
-    margin: 0px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 1rem;
-    font-size: 16px;
-}
-
-.administracion table button:disabled {
-    background-color: rgb(177, 170, 157);
-}
-
-.administracion th {
-    background-color: var(--naranja);
-    color: white;
-}
-
-.administracion tr:nth-child(odd) {
-    background-color: rgb(241, 241, 241);
-}
-
-.tipos-alojamientos {
-    margin: 1rem;
-    width: 90%;
+    flex-wrap: wrap;
+    gap: 1rem;
 }
