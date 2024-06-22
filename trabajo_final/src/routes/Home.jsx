@@ -10,8 +10,12 @@ import { images } from "../img/all";
 import { useApi } from "../services/ApiService";
 
 export const Home = () => {
-    const { listaAlojamientos, listaTiposAlojamiento, getTipoAlojamiento } =
-        useApi();
+    const {
+        listaAlojamientos,
+        listaTiposAlojamiento,
+        getTipoAlojamiento,
+        errFetchAlojamientos,
+    } = useApi();
 
     return (
         <main>
@@ -74,41 +78,28 @@ export const Home = () => {
                 </div>
                 <div className="hotels">
                     {listaAlojamientos.length === 0 ? (
-                        <div className="loading">
-                            <div>
-                                <span>Cargando...</span>
+                        !errFetchAlojamientos ? (
+                            <div className="loading">
+                                <div>
+                                    <span>Cargando...</span>
+                                </div>
+                                <FontAwesomeIcon
+                                    size="2x"
+                                    className="spinner"
+                                    icon={faSpinner}
+                                />
                             </div>
-                            <FontAwesomeIcon
-                                size="2x"
-                                className="spinner"
-                                icon={faSpinner}
-                            />
-                        </div>
+                        ) : (
+                            <div className="loading">
+                                <span>
+                                    Error al obtener los alojamientos desde el
+                                    servidor.
+                                </span>
+                            </div>
+                        )
                     ) : (
                         listaAlojamientos.map((a) => <Hotel hotel={a} />)
                     )}
-                </div>
-            </section>
-
-            <section>
-                <div className="tipos-alojamiento">
-                    <h2>Tipos de Alojamiento</h2>
-                    <p>
-                        Experiencia única, arte, descanso y naturaleza. Descubre
-                        el lujo y relax que te mereces. ¡Reserva hoy! Promoción
-                        2x1. Promociones todo el año.
-                    </p>
-                    <div className="contenedor-cartas">
-                        {listaTiposAlojamiento.map((t) => {
-                            return (
-                                <div className="carta">
-                                    <button type="submit">
-                                        {t.Descripcion}
-                                    </button>
-                                </div>
-                            );
-                        })}
-                    </div>
                 </div>
             </section>
         </main>

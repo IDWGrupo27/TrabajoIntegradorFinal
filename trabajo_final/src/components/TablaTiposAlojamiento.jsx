@@ -1,7 +1,7 @@
 import { useApi } from "../services/ApiService";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-    faPlus,
+    faSpinner,
     faMinus,
     faPencil,
     faFloppyDisk,
@@ -14,6 +14,7 @@ export const TablaTiposAlojamiento = () => {
         crearTipoAlojamiento,
         borrarTipoAlojamiento,
         editarTipoAlojamiento,
+        errFetchTiposAlojamiento,
     } = useApi();
 
     const [nuevoTipoAlojamiento, setNuevoTipoAlojamiento] = useState("");
@@ -70,7 +71,20 @@ export const TablaTiposAlojamiento = () => {
                     {listaTiposAlojamiento.length === 0 ? (
                         <tr>
                             <td></td>
-                            <td>Cargando...</td>
+                            {!errFetchTiposAlojamiento ? (
+                                <td>
+                                    Cargando...{" "}
+                                    <FontAwesomeIcon
+                                        className="spinner"
+                                        icon={faSpinner}
+                                    />
+                                </td>
+                            ) : (
+                                <td>
+                                    Error al recuperar los tipos de alojamiento
+                                    desde el servidor.
+                                </td>
+                            )}
                             <td></td>
                         </tr>
                     ) : null}

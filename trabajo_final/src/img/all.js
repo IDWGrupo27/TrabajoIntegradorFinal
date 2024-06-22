@@ -9,13 +9,13 @@ import { hostal_del_bosque } from "../img/images_hostal_del_bosque";
 
 export const images = {
     ninguna: ninguna,
-    apartHotelCarilo: hotel,
-    cabanaPlaya: cabana,
-    casaCampoSalta: casa_campo,
-    albergueTuristico: albergue,
-    departamentosGaleriaEntreRios: dptos,
-    casaHuespedLaCaldera: casa_huesped,
-    hostalDelBosque: hostal_del_bosque,
+    hotel: hotel,
+    cabana: cabana,
+    casaDeCampo: casa_campo,
+    albergue: albergue,
+    departamento: dptos,
+    casaHuesped: casa_huesped,
+    hostal: hostal_del_bosque,
 };
 
 export default images;

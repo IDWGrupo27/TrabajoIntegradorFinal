@@ -70,13 +70,20 @@ export const Hotel = ({ hotel }) => {
     }, [listaServicios]);
 
     useEffect(() => {
-        const hotelName = camelize(hotel.Titulo);
-        if (images[hotelName]) {
-            setHotelImages(images[hotelName]);
+        let hotelType = listaTiposAlojamiento.find(
+            (t) => t.idTipoAlojamiento === hotel.idTipoAlojamiento
+        );
+        if (hotelType) {
+            hotelType = camelize(hotelType.Descripcion);
+            if (images[hotelType]) {
+                setHotelImages(images[hotelType]);
+            } else {
+                setHotelImages(images.ninguna);
+            }
         } else {
             setHotelImages(images.ninguna);
         }
-    }, []);
+    }, [hotel]);
 
     useEffect(() => {
         for (let i = 0; i < listaTiposAlojamiento.length; i++) {

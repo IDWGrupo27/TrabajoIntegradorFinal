@@ -131,6 +131,7 @@ a:not(.image-button) {
 
 .search-avail {
     display: flex;
+    flex-wrap: wrap;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -191,5 +192,22 @@ a:not(.image-button) {
     }
     100% {
         transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 700px) {
+    .search-avail form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    .search-avail > div {
+        width: 100%;
+    }
+    .search-avail form input,
+    .search-avail form input[type="date"],
+    .search-avail button {
+        width: 300px;
     }
 }

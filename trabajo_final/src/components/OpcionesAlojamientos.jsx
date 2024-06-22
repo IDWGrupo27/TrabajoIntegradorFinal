@@ -16,10 +16,12 @@ export const OpcionesAlojamientos = () => {
     const {
         listaAlojamientos,
         borrarAlojamiento,
+        actualizarAlojamiento,
         actualizarTituloAlojamiento,
         listaServicios,
         listaAlojamientosServicios,
         actualizarAlojamientoServicios,
+        errFetchAlojamientos,
     } = useApi();
 
     const [editNombreId, setEditNombreId] = useState(null);
@@ -93,7 +95,6 @@ export const OpcionesAlojamientos = () => {
             a["servicios"] = nuevaListaServicios;
             event.target.className = "servicio-check";
 
-            console.log(nuevaLA);
             setNuevaListaAlojamientos(nuevaLA);
         } else {
             const s = listaServicios.find((s) => s.idServicio === idServicio);
@@ -117,6 +118,13 @@ export const OpcionesAlojamientos = () => {
         if (c) {
             actualizarAlojamientoServicios(id, listaServicios);
         }
+    };
+
+    const handleAlternarDisponible = (alojamiento) => {
+        alojamiento.Estado === "Disponible"
+            ? (alojamiento.Estado = "Reservado")
+            : (alojamiento.Estado = "Disponible");
+        actualizarAlojamiento(alojamiento);
     };
 
     // se ejecuta cuando se actualiza la información recibida de la BBDD
@@ -166,9 +174,20 @@ export const OpcionesAlojamientos = () => {
                     {!nuevaListaAlojamientos[0] ? (
                         <tr>
                             <td></td>
-                            <td>
-                                Cargando... <FontAwesomeIcon icon={faSpinner} />
-                            </td>
+                            {!errFetchAlojamientos ? (
+                                <td>
+                                    Cargando...{" "}
+                                    <FontAwesomeIcon
+                                        className="spinner"
+                                        icon={faSpinner}
+                                    />
+                                </td>
+                            ) : (
+                                <td>
+                                    Error al recuperar los alojamientos desde el
+                                    servidor.
+                                </td>
+                            )}
                             <td></td>
                         </tr>
                     ) : null}
@@ -238,6 +257,22 @@ export const OpcionesAlojamientos = () => {
                                   </td>
                                   {nuevaListaAlojamientos ? (
                                       <td className="servicios">
+                                          <div
+                                              onClick={() =>
+                                                  handleAlternarDisponible(a)
+                                              }
+                                              className={
+                                                  a.Estado === "Disponible"
+                                                      ? "disponible-check disponible"
+                                                      : "disponible-check"
+                                              }
+                                          >
+                                              <span>
+                                                  {a.Estado === "Disponible"
+                                                      ? "Disponible"
+                                                      : "Reservado"}
+                                              </span>
+                                          </div>
                                           {listaServicios
                                               ? listaServicios.map((s) => (
                                                     <div
@@ -262,14 +297,7 @@ export const OpcionesAlojamientos = () => {
                                                                 : "servicio-check"
                                                         }
                                                     >
-                                                        <label
-                                                            htmlFor={
-                                                                s.Nombre +
-                                                                a.Titulo
-                                                            }
-                                                        >
-                                                            {s.Nombre}
-                                                        </label>
+                                                        <span>{s.Nombre}</span>
                                                     </div>
                                                 ))
                                               : null}
