@@ -57,7 +57,10 @@ export const Institucional = () => {
                 <p>
                     Hace click en el boton para poder ponerte en contacto con nosotros y asi poder registrar tu lugar en nuestro sitio
                 </p>
-                <button className="btn-registrar">CLICK AQUI</button>
+                <Link to={"/contacto"}>
+                 <button className="btn-registrar">CLICK AQUI</button>
+                </Link>
+             
              </section>
             </div>
         </main>
