@@ -55,10 +55,10 @@ export const Institucional = () => {
              <h2>¿Te interesaria registrar tu alojamiento?</h2>
              <section className="box-info">
                 <p>
-                    Hace click en el boton para poder ponerte en contacto con nosotros y asi poder registrar tu lugar en nuestro sitio
+                    Hace click en este boton para poder ponerte en contacto con nosotros y asi poder registrar tu lugar en nuestro sitio
                 </p>
                 <Link to={"/contacto"}>
-                 <button className="btn-registrar">CLICK AQUI</button>
+                  <button className="btn-registrar">CLICK AQUI</button>
                 </Link>
              
              </section>
