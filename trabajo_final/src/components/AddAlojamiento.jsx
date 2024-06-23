@@ -27,6 +27,7 @@ export const AddAlojamiento = () => {
             CantidadBanios: nuevaCantidadBanios,
             Estado: "Reservado",
             TipoAlojamiento: nuevoIdTipoAlojamiento,
+            idTipoAlojamiento: nuevoIdTipoAlojamiento,
         };
         crearAlojamiento(nuevoAlojamiento);
     };

@@ -11,8 +11,13 @@ import "../css/TablaSimple.css";
 import { useEffect, useState } from "react";
 
 export const TablaServicios = () => {
-    const { listaServicios, crearServicio, borrarServicio, editarServicio } =
-        useApi();
+    const {
+        listaServicios,
+        crearServicio,
+        borrarServicio,
+        editarServicio,
+        errFetchServicios,
+    } = useApi();
 
     const [nuevoServicio, setNuevoServicio] = useState("");
 
@@ -68,9 +73,21 @@ export const TablaServicios = () => {
                     {listaServicios.length === 0 ? (
                         <tr>
                             <td></td>
-                            <td>
-                                Cargando... <FontAwesomeIcon icon={faSpinner} />
-                            </td>
+                            {!errFetchServicios ? (
+                                <td>
+                                    Cargando...{" "}
+                                    <FontAwesomeIcon
+                                        className="spinner"
+                                        icon={faSpinner}
+                                    />
+                                </td>
+                            ) : (
+                                <td>
+                                    Error al recuperar los servicios desde el
+                                    servidor.
+                                </td>
+                            )}
+
                             <td></td>
                         </tr>
                     ) : null}

@@ -1,20 +1,21 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import {
-    faWifi,
-    faPersonSwimming,
-    faPaw,
-} from "@fortawesome/free-solid-svg-icons";
-import { alojamientosEstaticos } from "../static/alojamientos";
-
 export const ApiServiceContext = createContext();
 
 export const ApiService = ({ children }) => {
     const APIURL = "http://localhost:3001/";
+
     const [listaAlojamientos, setListaAlojamientos] = useState([]);
     const [listaTiposAlojamiento, setListaTiposAlojamiento] = useState([]);
     const [listaServicios, setListaServicios] = useState([]);
     const [listaAlojamientosServicios, setListaAlojamientosServicios] =
         useState([]);
+
+    const [errFetchAlojamientos, setErrFetchAlojamientos] = useState(false);
+    const [errFetchTiposAlojamiento, setErrFetchTiposAlojamiento] =
+        useState(false);
+    const [errFetchServicios, setErrFetchServicios] = useState(false);
+    const [errFetchAlojamientosServicios, setErrFetchAlojamientosServicios] =
+        useState(false);
 
     /// ******************* Relaciones servicio-alojamiento ******************* ///
     const fetchAlojamientosServivios = () => {
@@ -24,18 +25,8 @@ export const ApiService = ({ children }) => {
                 setListaAlojamientosServicios(data);
             })
             .catch((error) => {
-                setListaAlojamientosServicios([
-                    { idAlojamiento: 1, idServicio: 1 },
-                    { idAlojamiento: 2, idServicio: 2 },
-                    { idAlojamiento: 3, idServicio: 1 },
-                    { idAlojamiento: 4, idServicio: 1 },
-                    { idAlojamiento: 4, idServicio: 2 },
-                    { idAlojamiento: 5, idServicio: 1 },
-                    { idAlojamiento: 5, idServicio: 2 },
-                    { idAlojamiento: 6, idServicio: 1 },
-                    { idAlojamiento: 6, idServicio: 2 },
-                    { idAlojamiento: 6, idServicio: 3 },
-                ]);
+                setErrFetchAlojamientosServicios(true);
+                console.log("Error al obtener los servicios de alojamientos.");
             });
     };
 
@@ -63,7 +54,6 @@ export const ApiService = ({ children }) => {
                 return response.json();
             }
         );
-
         // Si se borraron correctamente, se procede a cargar los nuevos
         try {
             await Promise.all(promises);
@@ -92,7 +82,6 @@ export const ApiService = ({ children }) => {
         } catch (error) {
             console.error("Error al borrar los alojamiento-servicios: ", error);
         }
-
         for (let i = 0; i < alojamientoServiciosABorrar.length; i++) {
             fetch(
                 APIURL +
@@ -113,10 +102,8 @@ export const ApiService = ({ children }) => {
                 setListaAlojamientos(response);
             })
             .catch((error) => {
-                console.log(
-                    "Error al obtener alojamientos. Mostrando solo alojamientos estáticos"
-                );
-                setListaAlojamientos(alojamientosEstaticos);
+                setErrFetchAlojamientos(true);
+                console.log("Error al obtener alojamientos.");
             });
     };
 
@@ -164,6 +151,26 @@ export const ApiService = ({ children }) => {
         }
     };
 
+    const actualizarAlojamiento = (alojamiento) => {
+        let a = structuredClone(alojamiento);
+        delete a["servicios"];
+        try {
+            fetch(`${APIURL}alojamiento/putAlojamiento/${a.idAlojamiento}`, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(a),
+            }).then((res) => {
+                if (res.ok) {
+                    fetchAlojamientos();
+                }
+            });
+        } catch (error) {
+            console.log("Error al actualizar el titulo del alojamiento.");
+        }
+    };
+
     const borrarAlojamiento = (idAlojamiento) => {
         // Primero se borran las relaciones alojamiento-servicios
         try {
@@ -192,39 +199,8 @@ export const ApiService = ({ children }) => {
                 setListaTiposAlojamiento(response);
             })
             .catch((error) => {
-                setListaTiposAlojamiento([
-                    {
-                        idTipoAlojamiento: 1,
-                        Descripcion: "Hotel",
-                    },
-                    {
-                        idTipoAlojamiento: 2,
-                        Descripcion: "Hostal",
-                    },
-                    {
-                        idTipoAlojamiento: 3,
-                        Descripcion: "Departamento",
-                    },
-                    {
-                        idTipoAlojamiento: 4,
-                        Descripcion: "Casa",
-                    },
-                    {
-                        idTipoAlojamiento: 5,
-                        Descripcion: "Cabaña",
-                    },
-                    {
-                        idTipoAlojamiento: 6,
-                        Descripcion: "Casa de campo",
-                    },
-                    {
-                        idTipoAlojamiento: 7,
-                        Descripcion: "Albergue",
-                    },
-                ]);
-                console.log(
-                    "Error al obtener tipos de alojamiento. Mostrando solo tipos estáticos"
-                );
+                setErrFetchTiposAlojamiento(true);
+                console.log("Error al obtener tipos de alojamiento.");
             });
     };
 
@@ -294,23 +270,8 @@ export const ApiService = ({ children }) => {
                 setListaServicios(data);
             })
             .catch((error) => {
-                console.log(
-                    "No se pudieron cargar servicios. Mostrando servicios estáticos"
-                );
-                setListaServicios([
-                    {
-                        idServicio: 1,
-                        Nombre: "Internet",
-                    },
-                    {
-                        idServicio: 2,
-                        Nombre: "Se permiten mascotas",
-                    },
-                    {
-                        idServicio: 3,
-                        Nombre: "Acceso a piscina",
-                    },
-                ]);
+                setErrFetchServicios(true);
+                console.log("No se pudieron cargar servicios.");
             });
     };
 
@@ -360,6 +321,7 @@ export const ApiService = ({ children }) => {
             value={{
                 APIURL,
                 actualizarTituloAlojamiento,
+                actualizarAlojamiento,
                 borrarAlojamiento,
                 listaTiposAlojamiento,
                 crearTipoAlojamiento,
@@ -374,6 +336,10 @@ export const ApiService = ({ children }) => {
                 editarServicio,
                 listaAlojamientosServicios,
                 actualizarAlojamientoServicios,
+                errFetchAlojamientos,
+                errFetchTiposAlojamiento,
+                errFetchServicios,
+                errFetchAlojamientosServicios,
             }}
         >
             {children}
