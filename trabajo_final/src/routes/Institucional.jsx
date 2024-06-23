@@ -9,14 +9,13 @@ import imagenTitulo from "../img/images/imagenTitulo.jpeg";
 export const Institucional = () => {
     return (
         <main className="main-info">
-            
             <section className="box-titulo">
-             <div className="content-box">
-              <h1>INFORMACION INSITUCIONAL</h1>
-              <img src={imagenTitulo} alt="Titulo" />
-             </div>
+                <div className="content-box">
+                    <h1>INFORMACION INSITUCIONAL</h1>
+                    <img src={imagenTitulo} alt="Titulo" />
+                </div>
             </section>
-            
+
             <h2>¿Quienes somos?</h2>
             <section className="box-info">
                 <p>
@@ -31,7 +30,7 @@ export const Institucional = () => {
                 <p>
                     Poder brindar la mejor atencion a todas aquellas personas
                     que quieran utilizar nuestros servicios, devolverles su
-                    confianza con los mejores alojamientos 
+                    confianza con los mejores alojamientos
                 </p>
             </section>
 
@@ -52,16 +51,19 @@ export const Institucional = () => {
             </section>
 
             <div className="box-registrar">
-             <h2>¿Te interesaria registrar tu alojamiento?</h2>
-             <section className="box-info">
-                <p>
-                    Hace click en el boton para poder ponerte en contacto con nosotros y asi poder registrar tu lugar en nuestro sitio
-                </p>
-                <button className="btn-registrar">CLICK AQUI</button>
-             </section>
+                <h2>¿Te interesaria registrar tu alojamiento?</h2>
+                <section className="box-info">
+                    <p>
+                        Hace click en este boton para poder ponerte en contacto
+                        con nosotros y asi poder registrar tu lugar en nuestro
+                        sitio
+                    </p>
+                    <Link to={"/contacto"}>
+                        <button className="btn-registrar">CLICK AQUI</button>
+                    </Link>
+                </section>
             </div>
         </main>
-        
     );
 };
 
